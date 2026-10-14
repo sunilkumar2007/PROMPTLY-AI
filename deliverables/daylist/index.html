@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f5f3" />
+    <meta
+      name="description"
+      content="Daylist is a simple, private task list that stays in your browser."
+    />
+    <title>Daylist — A calmer task list</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Daylist home"
+          ><span class="brand-mark">D</span><span>daylist</span></a
+        >
+        <span class="privacy-note"><span class="privacy-dot"></span>Saved on this device</span>
+      </header>
+
+      <section class="intro" id="top">
+        <p class="eyebrow">YOUR DAY, IN ORDER</p>
+        <h1>Make room for what matters.</h1>
+        <p class="intro-copy">A small, clear place for everything you need to get done.</p>
+      </section>
+
+      <section class="summary" aria-label="Task summary">
+        <div><span class="summary-label">All tasks</span><strong id="total-count">0</strong></div>
+        <div><span class="summary-label">To do</span><strong id="active-count">0</strong></div>
+        <div><span class="summary-label">Done</span><strong id="completed-count">0</strong></div>
+      </section>
+
+      <section class="composer panel" aria-labelledby="add-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">GET IT DOWN</p>
+            <h2 id="add-heading">Add a task</h2>
+          </div>
+        </div>
+        <form id="task-form" class="task-form">
+          <label class="field title-field"
+            ><span>Task</span
+            ><input
+              name="title"
+              maxlength="160"
+              placeholder="What needs doing?"
+              required
+              autocomplete="off"
+          /></label>
+          <label class="field"
+            ><span>Category</span
+            ><input name="category" maxlength="32" value="Personal" placeholder="Personal"
+          /></label>
+          <label class="field"
+            ><span>Priority</span
+            ><select name="priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select></label
+          >
+          <label class="field"><span>Due date</span><input name="dueDate" type="date" /></label>
+          <button class="primary-button add-button" type="submit">
+            <span aria-hidden="true">＋</span> Add task
+          </button>
+        </form>
+      </section>
+
+      <section class="list-section" aria-labelledby="list-heading">
+        <div class="list-heading-row">
+          <div>
+            <p class="eyebrow">YOUR TASKS</p>
+            <h2 id="list-heading">The list</h2>
+          </div>
+          <button id="clear-completed" class="text-button clear-button" type="button" disabled>
+            Clear completed
+          </button>
+        </div>
+        <div class="toolbar">
+          <label class="search-field"
+            ><span class="search-icon" aria-hidden="true">⌕</span
+            ><span class="visually-hidden">Search tasks</span
+            ><input id="search" type="search" placeholder="Search tasks or categories"
+          /></label>
+          <label class="sort-field"
+            ><span class="visually-hidden">Sort tasks</span
+            ><select id="sort">
+              <option value="created">Newest first</option>
+              <option value="due">Due date</option>
+              <option value="priority">Priority</option>
+            </select></label
+          >
+        </div>
+        <div class="filter-row" role="group" aria-label="Filter tasks">
+          <button
+            type="button"
+            data-filter="all"
+            aria-pressed="true"
+            class="filter-button selected"
+          >
+            All
+          </button>
+          <button type="button" data-filter="active" aria-pressed="false" class="filter-button">
+            To do
+          </button>
+          <button type="button" data-filter="completed" aria-pressed="false" class="filter-button">
+            Done
+          </button>
+          <button type="button" data-filter="overdue" aria-pressed="false" class="filter-button">
+            Overdue
+          </button>
+        </div>
+        <div id="task-list" class="task-list" aria-live="polite"></div>
+        <div id="empty-state" class="empty-state">
+          <span class="empty-mark" aria-hidden="true">✓</span>
+          <h3 id="empty-title">Your list is clear</h3>
+          <p id="empty-copy">Add a task to give your day a clear next step.</p>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Daylist</span><span>Simple by design. Private by default.</span>
+      </footer>
+    </main>
+
+    <dialog id="edit-dialog" class="edit-dialog" aria-labelledby="edit-heading">
+      <form id="edit-form" method="dialog">
+        <p class="eyebrow">UPDATE TASK</p>
+        <h2 id="edit-heading">Edit task</h2>
+        <label class="field"
+          ><span>Task</span><input name="title" maxlength="160" required
+        /></label>
+        <div class="edit-grid">
+          <label class="field"><span>Category</span><input name="category" maxlength="32" /></label
+          ><label class="field"
+            ><span>Priority</span
+            ><select name="priority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select></label
+          >
+        </div>
+        <label class="field"><span>Due date</span><input name="dueDate" type="date" /></label>
+        <div class="dialog-actions">
+          <button id="cancel-edit" class="secondary-button" type="button">Cancel</button
+          ><button class="primary-button" type="submit">Save changes</button>
+        </div>
+      </form>
+    </dialog>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>
